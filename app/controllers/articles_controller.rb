@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   
+  # call the set_article method befor calling the other actions listed
+  before_action :set_article, only: [:edit, :update, :show, :destroy] 
   def index
     # Grab all the articles from database
     @articles = Article.all
@@ -27,15 +29,12 @@ class ArticlesController < ApplicationController
   
   # show action set article based on the article id
   def show
-    @article = Article.find(params[:id]) 
   end
   # edit action
   def edit
-    @article = Article.find(params[:id]) 
   end
   # update action 
   def update
-    @article = Article.find(params[:id]) 
     if @article.update(article_params) 
       flash[:notice] = "Article was successfully updated."
       # redirect to show page
@@ -47,17 +46,23 @@ class ArticlesController < ApplicationController
   end
   
   def destroy
-    @article = Article.find(params[:id]) 
     @article.destroy
     flash[:notice]  = "Article was successfully deleted"
     redirect_to articles_path
   end
   
   private
+  # created this method, as it was repeated 4x in previous instance methods for
+  # show, edit, update, destroy
+  def set_article
+    @article = Article.find(params[:id])  
+  end
+  
   # private method to set/add in title, description
   def article_params
     # allow the top level key :article permit values :title :description 
     params.require(:article).permit(:title, :description)
   end
+  
   
 end  
