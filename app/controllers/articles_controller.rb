@@ -1,5 +1,11 @@
 class ArticlesController < ApplicationController
   
+  def index
+    # Grab all the articles from database
+    @articles = Article.all
+    
+  end
+  
   def new
     @article = Article.new
   end
@@ -10,28 +16,33 @@ class ArticlesController < ApplicationController
     # add the passed in params to article
     @article = Article.new(article_params)
     if @article.save
+      # flash to show a notice/message back to user
       flash[:notice] = "Article was successfully created."
       # redirect to show action/method
       redirect_to article_path(@article)
     else
+      # show the new page again
       render 'new'
     end
   end  
   
+  # show action set article based on the article id
   def show
     @article = Article.find(params[:id]) 
   end
-  
+  # edit action
   def edit
     @article = Article.find(params[:id]) 
   end
-  
+  # update action 
   def update
     @article = Article.find(params[:id]) 
     if @article.update(article_params) 
       flash[:notice] = "Article was successfully updated."
+      # redirect to show page
       redirect_to article_path(@article)
     else
+      # show edit page again 
       render 'edit'
     end
   end
