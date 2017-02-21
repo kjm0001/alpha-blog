@@ -10,5 +10,7 @@ class User < ActiveRecord::Base
             length: { maximum: 105},
             uniqueness: { case_sensitive: false },
             format: { with: VALID_EMAIL_REGEX }
+  ## use of bcrypt gem to enable 1 way password hashing 
+  has_secure_password
   
 end  
