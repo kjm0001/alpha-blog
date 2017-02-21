@@ -12,10 +12,14 @@ class ArticlesController < ApplicationController
   end
   
   def create
+    ## byebug gem
+    #debugger
     # error debug: display what is being passed into
     ##render plain: params[:article].inspect
     # add the passed in params to article
     @article = Article.new(article_params)
+    ## hard code user for temp
+    @article.user = User.first
     if @article.save
       # flash to show a notice/message back to user
       flash[:success] = "Article was successfully created."

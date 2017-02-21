@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  
+  ## settting up relationship to 1 to many articles
+  has_many :articles
+  before_save { self.email = email.downcase }
   validates :username, presence: true, 
             uniqueness: { case_sensitive: false },
             length: { minimum: 3, maximum: 25 }
