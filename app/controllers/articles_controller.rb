@@ -3,8 +3,12 @@ class ArticlesController < ApplicationController
   # call the set_article method befor calling the other actions listed
   before_action :set_article, only: [:edit, :update, :show, :destroy] 
   def index
-    # Grab all the articles from database
-    @articles = Article.all
+    ## Grab all the articles from database
+    #@articles = Article.all
+    ## paginate gem now installed 
+    ## will load default items per page instead of all as before or specify
+    @articles = Article.paginate(page: params[:page], per_page:5)
+    
   end
   
   def new
