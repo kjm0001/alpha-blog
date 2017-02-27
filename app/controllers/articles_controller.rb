@@ -1,7 +1,11 @@
 class ArticlesController < ApplicationController
-  
+  # all before_actions must be listed in order 
   # call the set_article method befor calling the other actions listed
   before_action :set_article, only: [:edit, :update, :show, :destroy] 
+  # except for index,show all others require user 
+  before_action :require_user, except: [:index, :show]
+  # only allow users to edit, update, destroy their own articles
+  before_action :require_same_user, only: [:edit, :update, :destroy]
   def index
     ## Grab all the articles from database
     #@articles = Article.all
@@ -72,5 +76,11 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :description)
   end
   
+  def  require_same_user
+   if current_user != @article.user
+     flash[:danger] = "You can only edit or delete your own article"
+     redirect_to root_path
+   end
+  end
   
 end  
