@@ -27,7 +27,10 @@ class ArticlesController < ApplicationController
     # add the passed in params to article
     @article = Article.new(article_params)
     ## hard code user for temp
-    @article.user = User.first
+    ##@article.user = User.first
+    ## changed to use the current_user now
+    @article.user = current_user
+    
     if @article.save
       # flash to show a notice/message back to user
       flash[:success] = "Article was successfully created."
