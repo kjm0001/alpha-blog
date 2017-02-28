@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   ## settting up relationship to 1 to many articles
-  has_many :articles
+  ## whatever this user has it will destroy all its articles with dependent
+  has_many :articles, dependent: :destroy
   before_save { self.email = email.downcase }
   validates :username, presence: true, 
             uniqueness: { case_sensitive: false },
