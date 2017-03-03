@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     ## Grab all users
     ##@users = User.all
     ## paginate users
-    @users = User.paginate(page: params[:page], per_page:5)
+    @users = User.paginate(page: params[:page], per_page: 5)
   end
   
   def new
