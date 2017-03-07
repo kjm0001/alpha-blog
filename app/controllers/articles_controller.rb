@@ -76,7 +76,8 @@ class ArticlesController < ApplicationController
   # private method to set/add in title, description
   def article_params
     # allow the top level key :article permit values :title :description 
-    params.require(:article).permit(:title, :description)
+    # add in array form for category_ids
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
   
   def  require_same_user
